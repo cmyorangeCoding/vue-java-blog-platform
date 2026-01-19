@@ -80,6 +80,7 @@
 
 #### 首页
 <img width="1830" height="939" alt="3a8f54859f5e65cc9c58774f50401b8" src="https://github.com/user-attachments/assets/24acf0f3-e3e9-46d6-b716-aa4863ad1f3a" />
+
 <img width="1818" height="907" alt="d807cb6b6d53a54ab2276156b69ccb2" src="https://github.com/user-attachments/assets/53625b7f-52d2-4bd0-899c-40d857e748da" />
 
 #### 注册页面
@@ -92,6 +93,7 @@
 
 #### 文章详情
 <img width="1830" height="924" alt="1275aeacb512d9efa2947a56693847e" src="https://github.com/user-attachments/assets/8f2cc562-73e2-4d3a-8c2a-62724e44d06b" />
+
 <img width="1814" height="930" alt="20be5c1f6eff9345c9242b952cc34b6" src="https://github.com/user-attachments/assets/669d4914-4e21-4b0f-a71d-f0175fa4a89c" />
 
 #### 个人中心
@@ -129,6 +131,7 @@ http://localhost:8080
 cd blog-frontend
 npm install
 npm run dev
+```
 
 前端访问地址：
 http://localhost:5173
