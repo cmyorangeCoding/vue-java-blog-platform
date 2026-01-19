@@ -1,0 +1,358 @@
+:root {
+  /* PageLab — Teleport 暖橙低饱和视觉变量（保留旧变量兼容） */
+  --pagelab-orange: #F59E0B; /* 主暖橙 */
+  --pagelab-orange-dark: #D97706; /* 深橙 */
+  --pagelab-bg-start: #FFF7ED; /* 背景渐变起始 */
+  --pagelab-bg-end: #FFFFFF; /* 背景渐变结束 */
+  --pagelab-accent: rgba(245,158,11,0.08); /* 装饰性浅色 */
+
+  /* 兼容旧变量名（避免大规模替换破坏） */
+  --github-primary: var(--pagelab-orange);
+  --github-danger: #EF4444;
+  --github-border: #e6eaef;
+  --github-bg: #ffffff;
+  --github-text: #000000; /* 主文字改为纯黑 */
+  --github-light-text: #666666; /* 次文字为深灰 */
+}
+/* Element Plus 主题主色覆盖为 PageLab 暖橙（覆盖默认蓝色） */
+:root {
+  --el-color-primary: var(--pagelab-orange);
+  --el-color-primary-dark-2: var(--pagelab-orange-dark);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Segoe UI", Helvetica, Arial, sans-serif;
+  color: var(--github-text);
+  line-height: 1.6;
+  background: linear-gradient(180deg, var(--pagelab-bg-start) 0%, var(--pagelab-bg-end) 40%);
+  min-height: 100vh;
+}
+
+/* 顶部柔焦径向装饰与右侧淡点（装饰性，不影响布局） */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+}
+body::before {
+  top: -10%;
+  left: 50%;
+  width: 720px;
+  height: 360px;
+  transform: translateX(-50%);
+  background: radial-gradient(circle at center, rgba(245,158,11,0.06), transparent 40%);
+}
+body::after {
+  right: -6%;
+  top: 60%;
+  width: 360px;
+  height: 360px;
+  background: radial-gradient(circle at center, rgba(245,158,11,0.04), transparent 45%);
+}
+
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.github-card {
+  background-color: var(--github-bg);
+  border-radius: 12px; /* 卡片圆角 12px */
+  padding: 24px; /* 卡片内边距 24px */
+  width: 100%;
+  box-shadow: 0 6px 10px rgba(20,24,28,0.05); /* 低透明度浅灰阴影 */
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+}
+
+.github-card + .github-card {
+  margin-top: 32px; /* 卡片间距 32px */
+}
+
+.github-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(20,24,28,0.07);
+}
+
+.card-header {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--github-text);
+}
+
+/* 渐变装饰标题（如“最新文章”），文本使用背景裁剪以实现渐变文字效果 */
+.card-header--accent {
+  background: linear-gradient(90deg, var(--pagelab-orange), var(--pagelab-orange-dark));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+.github-btn {
+  display: inline-block;
+  padding: 12px 24px; /* 上下12px、左右24px */
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  border-radius: 10px; /* 按钮圆角 10px */
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.github-btn.primary {
+  background: linear-gradient(90deg, var(--pagelab-orange), var(--pagelab-orange-dark));
+  color: #ffffff;
+  border: none;
+}
+
+.github-btn.secondary {
+  background: #ffffff;
+  color: var(--pagelab-orange);
+  border: 1px solid var(--pagelab-orange);
+}
+
+.github-btn:hover {
+  transform: translateY(-2px);
+}
+
+.github-btn.danger {
+  /* 与主按钮保持一致的橙色渐变样式（适用于文章删除等） */
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  background: linear-gradient(90deg, var(--pagelab-orange), var(--pagelab-orange-dark));
+  border: none;
+  border-radius: 10px;
+}
+
+.github-btn.danger:hover {
+  filter: brightness(0.96);
+  transform: translateY(-1px);
+}
+
+/* 文章标题样式：黑色、加粗、统一字号 */
+.article-title {
+  color: #000000;
+  font-weight: 700;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+/* 确保首页文章标题为纯黑（更高优先级选择器，避免被内联或第三方样式覆盖） */
+.home .article-item .article-title {
+  color: #000000;
+}
+
+/* 分页样式：圆形，当前页暖橙填充 */
+.el-pagination .el-pager li {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--pagelab-orange);
+  color: #000000;
+  background: #ffffff;
+  display: inline-block;
+  text-align: center;
+}
+.el-pagination .is-current,
+.el-pagination .el-pager li.current,
+.el-pagination .el-pager li.active {
+  background-color: var(--pagelab-orange) !important;
+  color: #fff !important;
+  border-color: var(--pagelab-orange) !important;
+}
+.el-pagination .el-pager li:hover {
+  background: rgba(245,158,11,0.06);
+}
+
+/* 红色文字链接（用于替代删除按钮，字体不大） */
+.text-danger-link {
+  color: #EF4444;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0 6px;
+}
+.text-danger-link:hover {
+  color: #d63b3b;
+  text-decoration: underline;
+}
+
+/* 覆盖 Element Plus 的主按钮配色为橙红渐变 */
+.el-button--primary {
+  background: linear-gradient(90deg, var(--pagelab-orange), var(--pagelab-orange-dark)) !important;
+  border-color: transparent !important;
+  color: #fff !important;
+}
+.el-button--primary:hover {
+  filter: brightness(0.98);
+}
+
+/* 搜索/输入样式：无边框，仅底部 1px 实线 */
+.el-input__inner,
+.el-textarea__inner {
+  border: none;
+  border-bottom: 1px solid var(--github-border);
+  border-radius: 0;
+  background: #ffffff;
+  padding: 8px 10px;
+}
+.el-input__inner::placeholder,
+.el-textarea__inner::placeholder {
+  color: var(--github-light-text);
+}
+
+/* 移动端适配：仅在小屏幕上调整按钮与标题，桌面端不受影响 */
+@media (max-width: 600px) {
+  .github-card {
+    padding: 16px; /* 卡片内边距略小 */
+  }
+
+  /* 通用按钮略小但可点面积保留 */
+  .github-btn {
+    padding: 8px 14px;
+    font-size: 13px;
+    border-radius: 8px;
+  }
+
+  /* 首页：移动端隐藏“清空”按钮，仅保留查询按钮 */
+  .home .github-btn.secondary {
+    display: none !important;
+  }
+
+  /* 在文章列表与文章详情中的编辑/删除按钮，统一且更紧凑 */
+  .article-item .github-btn,
+  .article-actions .github-btn {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  /* 确保主/次/危险按钮在移动端视觉一致 */
+  .github-btn.primary,
+  .github-btn.secondary,
+  .github-btn.danger {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  /* 文章详情页的标题在移动端稍微大一些，便于阅读 */
+  .article-detail .article-title {
+    font-size: 20px;
+  }
+
+  /* 列表项间距稍微紧凑，节省垂直空间 */
+  .article-item {
+    padding: 0.5rem 0;
+  }
+  
+  /* 移动端分页更紧凑 */
+  .el-pagination {
+    font-size: 13px;
+  }
+  .el-pagination .el-pager li {
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+    border-radius: 50%;
+    margin: 0 4px;
+    font-size: 12px;
+  }
+  .el-pagination .el-pager li:first-child,
+  .el-pagination .el-pager li:last-child {
+    width: auto;
+    height: auto;
+    line-height: normal;
+  }
+}
+.el-input__inner:focus,
+.el-textarea__inner:focus {
+  outline: none;
+  border-bottom-color: var(--pagelab-orange);
+  background: rgba(245,158,11,0.02);
+}
+
+/* 下拉选择样式 */
+.el-select .el-input__inner {
+  border: none;
+  border-bottom: 1px solid var(--github-border);
+  border-radius: 0;
+}
+.el-select-dropdown__wrap .el-scrollbar__view {
+  background: #ffffff;
+}
+.el-select-dropdown .el-option:hover {
+  background: rgba(245,158,11,0.03);
+}
+
+/* 选中/激活的下拉项使用暖橙色 */
+.el-select-dropdown .el-option.is-active,
+.el-select-dropdown .el-option.selected {
+  background: rgba(245,158,11,0.06) !important;
+  color: var(--pagelab-orange-dark) !important;
+}
+
+/* 下拉触发器（显示选中值）使用暖橙色而非蓝色 */
+.el-select .el-input__inner {
+  color: var(--pagelab-orange);
+}
+
+/* 表单面板宽度与装饰条 */
+.form-panel {
+  width: 480px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 6px 10px rgba(20,24,28,0.05);
+  position: relative;
+}
+.form-panel::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 8px; /* 顶部暖橙装饰条 */
+  background: var(--pagelab-orange);
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+/* 统计数字模块 */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.stat-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 16px;
+  text-align: center;
+}
+.stat-number {
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--pagelab-orange);
+}
+.stat-label {
+  margin-top: 8px;
+  color: #000000;
+  font-size: 14px;
+}

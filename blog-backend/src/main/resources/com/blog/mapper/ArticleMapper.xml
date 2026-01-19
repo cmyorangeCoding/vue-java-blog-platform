@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.blog.mapper.ArticleMapper">
+
+    <!-- 插入文章 -->
+    <insert id="insertWithUserId" parameterType="com.blog.entity.Article" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO article (title, content, category_id, user_id, create_time, update_time)
+        VALUES (#{title}, #{content}, #{categoryId}, #{userId}, NOW(), NOW())
+    </insert>
+
+    <!-- 多条件分页查询（兼容：标题+分类+标签+用户+通用关键词） -->
+    <select id="selectArticlesByCondition" resultType="com.blog.entity.Article">
+        <!-- 新增u.username和u.avatar，并用别名对应实体字段 -->
+        SELECT a.*, u.username as authorName, u.avatar as authorAvatar
+        FROM article a
+        LEFT JOIN article_tag at ON a.id = at.article_id
+        LEFT JOIN user u ON a.user_id = u.id  <!-- 关联用户表，支持用户名搜索 -->
+        WHERE 1=1
+
+        <!-- 通用关键词：匹配标题 OR 用户名 -->
+        <if test="query.keyword != null and query.keyword != ''">
+            AND (a.title LIKE CONCAT('%', #{query.keyword}, '%') OR u.username LIKE CONCAT('%', #{query.keyword}, '%'))
+        </if>
+
+        <!-- 原有标题模糊查询（保留，兼容旧逻辑） -->
+        <if test="query.title != null and query.title != '' and query.keyword == null">
+            AND a.title LIKE CONCAT('%', #{query.title}, '%')
+        </if>
+
+        <!-- 分类 -->
+        <if test="query.categoryId != null">
+            AND a.category_id = #{query.categoryId}
+        </if>
+
+        <!-- 标签 -->
+        <if test="query.tagId != null">
+            AND at.tag_id = #{query.tagId}
+        </if>
+
+        <!-- 作者ID -->
+        <if test="query.userId != null">
+            AND a.user_id = #{query.userId}
+        </if>
+
+        GROUP BY a.id
+        ORDER BY a.create_time DESC
+    </select>
+
+
+    <!-- 单篇文章详情查询，关联用户表获取作者信息 -->
+    <select id="selectArticleDetailById" resultType="com.blog.entity.Article">
+        SELECT
+            a.id,
+            a.title,
+            a.user_id AS userId,
+            a.create_time AS createTime,
+            a.category_id AS categoryId,
+            a.content,
+            u.username AS authorName,
+            u.avatar AS authorAvatar
+        FROM
+            article a
+                LEFT JOIN
+            user u ON a.user_id = u.id
+        WHERE
+            a.id = #{id}
+    </select>
+</mapper>

@@ -1,0 +1,95 @@
+/* PageLab 头部视觉（低饱和冷色调，保留类名以兼容） */
+.github-header {
+  background: #ffffff;
+  color: #000;
+  height: 60px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 1px 0 rgba(16,24,40,0.04);
+}
+
+.header-content {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.pagelab-brand {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--pagelab-orange);
+  line-height: 1;
+}
+
+.pagelab-slogan {
+  font-size: 12px;
+  color: #666666;
+  font-style: italic;
+  margin-top: 2px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.nav-link {
+  color: #000000;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
+  transition: color 0.12s ease;
+}
+
+.nav-link:hover {
+  color: var(--pagelab-orange);
+}
+
+/* 适配移动端 */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .github-card {
+    padding: 1rem;
+  }
+}
+
+/* 新增：移动端 logo 下移 + 刘海安全区处理 */
+.github-header {
+  /* 为刘海/状态栏留出安全区（移动端会增加顶部内边距） */
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+@media (max-width: 768px) {
+  .github-header {
+    padding-top: calc(env(safe-area-inset-top, 0px) + 8px);
+    height: auto;
+  }
+
+  .logo {
+    margin-top: calc(env(safe-area-inset-top, 0px) + 14px);
+    max-height: 48px;
+  }
+}
